@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANIME ARCHIVE · 追番档案系统</title>
+  <meta name="description" content="B站看过动画档案系统 —— 自动收集你的追番记录" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Regular.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Medium.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Semibold.min.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%2316181a' stroke-width='2.5' stroke-dasharray='61 21'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%230e9ba3'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <!-- 白场开机序列 -->
+  <div id="boot" aria-hidden="true">
+    <div class="boot-inner">
+      <div class="boot-ring"></div>
+      <pre id="boot-lines" class="boot-lines"></pre>
+      <div class="boot-bar"><i id="boot-bar-fill"></i></div>
+      <div class="boot-skip">CLICK / ANY KEY TO SKIP</div>
+    </div>
+  </div>
+
+  <!-- 主界面 -->
+  <div id="app" class="app" hidden>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-ring" aria-hidden="true"></span>
+        <div class="brand-text">
+          <strong>ANIME ARCHIVE</strong>
+          <span>追番档案系统 · RHINE STYLE</span>
+        </div>
+      </div>
+      <div class="topbar-meta">
+        <span class="chip">UID <b id="meta-uid">——</b></span>
+        <span class="chip">SYNC <b id="meta-sync">——</b></span>
+      </div>
+    </header>
+
+    <section class="stats" id="stats">
+      <!-- 由 JS 填充四个统计块 -->
+    </section>
+
+    <section class="toolbar">
+      <nav class="tabs" id="tabs">
+        <button class="tab is-active" data-status="all">全部档案</button>
+        <button class="tab" data-status="watched">看过</button>
+        <button class="tab" data-status="watching">在看</button>
+        <button class="tab" data-status="want">想看</button>
+      </nav>
+      <div class="toolbar-right">
+        <label class="search">
+          <span class="search-key">/</span>
+          <input id="search" type="text" placeholder="SEARCH RECORDS ..." autocomplete="off" />
+        </label>
+        <label class="sort">
+          <span>SORT</span>
+          <select id="sort">
+            <option value="pub">最近放送</option>
+            <option value="rating">评分最高</option>
+            <option value="title">标题 A→Z</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <main class="grid-wrap">
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" hidden>
+        <span class="empty-code">ERR_404_RECORD</span>
+        <span>没有匹配的档案，换个条件试试</span>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span>DATA SOURCE: BILIBILI PUBLIC BANGUMI API</span>
+      <span id="footer-count"></span>
+      <span>RUN <code>npm run sync</code> TO UPDATE RECORDS</span>
+    </footer>
+  </div>
+
+  <!-- 详情面板 -->
+  <div id="detail" class="detail" hidden>
+    <div class="detail-backdrop" id="detail-backdrop"></div>
+    <aside class="detail-panel" role="dialog" aria-modal="true">
+      <button class="detail-close" id="detail-close" aria-label="关闭">✕</button>
+      <div class="detail-cover">
+        <img id="detail-cover-img" referrerpolicy="no-referrer" alt="" />
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+      </div>
+      <div class="detail-info">
+        <span class="detail-index mono" id="detail-index">——</span>
+        <h2 class="detail-title" id="detail-title">——</h2>
+        <div class="detail-chips" id="detail-chips"></div>
+        <dl class="detail-meta" id="detail-meta"></dl>
+        <p class="detail-summary" id="detail-summary"></p>
+        <div class="detail-actions">
+          <div class="detail-rating">
+            <span class="mono">RATING</span>
+            <strong id="detail-rating">--</strong>
+          </div>
+          <a class="detail-link" id="detail-link" href="#" target="_blank" rel="noopener">
+            在 B 站打开 <span class="arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
